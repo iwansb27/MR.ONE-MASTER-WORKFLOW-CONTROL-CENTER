@@ -147,3 +147,153 @@ Workflow 02–04 dapat dibuat/diisi setelah masing-masing dibedah dan diuji. Tid
 **MASTER PROCEDURE — DRAFT / BELUM DIUJI END-TO-END.**
 
 Struktur dan aturan umum sudah ditetapkan. Pengujian berikutnya dilakukan pada Workflow 01 terlebih dahulu.
+
+
+## 9. Pembaruan Operasional — Wajib Dibaca GPT pada Setiap Sesi Baru
+
+Bagian ini menegaskan mekanisme kerja lintas-sesi berdasarkan checkpoint dan pengujian terbaru.
+
+### 9.1 Subjek kewajiban membaca adalah GPT
+
+Yang wajib membaca dan memahami prosedur sebelum bekerja adalah **GPT yang dipanggil untuk menjalankan pekerjaan**, termasuk GPT pada sesi baru setelah sesi sebelumnya ditutup.
+
+**GPT = orkestrator sekaligus pelaksana teknis inti.**
+
+**Iwan = owner/pemilik, pemberi ide/arah, decision maker, pemberi approval, dan operator manual hanya pada bagian yang memang memerlukan tindakan pengguna.**
+
+Pembagian ini tidak berarti Iwan menyerahkan kepemilikan atau keputusan kepada GPT. GPT menjalankan pekerjaan teknis sesuai prosedur; Iwan tetap memegang keputusan akhir dan aset miliknya.
+
+### 9.2 Prosedur wajib saat GPT masuk pada sesi baru
+
+Pada setiap sesi baru, sebelum mulai bekerja atau melanjutkan pekerjaan, GPT WAJIB:
+
+1. Membaca dan memahami **MASTER WORKSPACE terbaru** bila tersedia sebagai sumber kerja.
+2. Membaca **PROSEDUR-UMUM.md**.
+3. Membaca **checkpoint/status terakhir** yang relevan.
+4. Membaca dan memahami **seluruh prosedur Workflow 01, 02, 03, dan 04**, bukan hanya workflow yang disebut pertama kali.
+5. Memahami hubungan antar-workflow sebagai satu rangkaian.
+6. Setelah itu, untuk pekerjaan yang akan dijalankan, menggunakan aturan lokal workflow yang relevan sebagai prosedur operasional detail.
+
+Tujuannya adalah **GPT tidak meminta pengguna mengulang aturan yang sudah terdokumentasi** dan tidak memulai pekerjaan hanya berdasarkan ingatan percakapan yang parsial.
+
+Jika ada aturan yang konflik, dokumen yang berbeda versi, atau prosedur yang tidak tersedia, GPT harus menunjukkan konflik/kekurangan tersebut secara spesifik dan tidak membuat asumsi diam-diam.
+
+### 9.3 Aturan eksekusi dan perintah LANJUTKAN
+
+Membaca dan memahami prosedur tidak sama dengan izin melakukan perubahan.
+
+**GPT wajib membaca terlebih dahulu.**
+
+Untuk perubahan/build/eksekusi teknis yang memerlukan persetujuan pengguna, GPT menunggu perintah eksplisit **LANJUTKAN** sebelum melakukan tindakan tersebut.
+
+GPT tidak boleh mengubah workflow, repository, storage, connector, produk, atau konfigurasi hanya karena telah membaca prosedurnya.
+
+### 9.4 Pembagian kerja teknis
+
+Dalam proses pembuatan dan pemasaran produk digital:
+
+- **GPT** menangani pekerjaan teknis yang dapat dilakukan melalui tool/connector: orkestrasi flow, penyusunan Product Brief, pemetaan capability, pemilihan method yang sudah PASS, pembuatan materi melalui engine yang tersedia, QC berbasis prosedur, penyusunan materi marketing, pengelolaan metadata/ID, handoff antar-workflow, dan eksekusi publishing ketika jalurnya tersedia serta diperintahkan.
+- **Iwan** memberikan ide/arah, memilih atau menyetujui keputusan produk, memberikan approval, menyediakan atau menguasai aset miliknya, dan melakukan tindakan manual yang memang tidak tersedia bagi GPT.
+- **Iwan tetap pemilik produk, aset asli, akun, dan keputusan bisnis.**
+- GPT tidak mengambil alih keputusan kepemilikan atau keputusan akhir bisnis.
+
+### 9.5 Aturan Product Master dan Storage
+
+**File asli produk tidak dipindahkan ke Cloudinary hanya karena produk akan dipasarkan.**
+
+Master product asset tetap berada pada storage asal sesuai jenis output yang memang digunakan:
+
+- **Adobe Express** → master desain/PDF yang dibuat di Adobe.
+- **Airtable** → master data/tracker/formula yang dibuat di Airtable.
+- Storage lain hanya digunakan bila jalur tersebut memang sudah ditetapkan dan terbukti oleh Workflow 00/02.
+
+**Cloudinary digunakan untuk media/content yang memang perlu menjadi asset media publikasi/marketing**, termasuk salinan/preview/screenshot/gambar/video promosi setelah produk selesai dan lolos QC.
+
+Dengan demikian:
+
+**PRODUCT MASTER → tetap di storage asal**
+
+sedangkan:
+
+**MEDIA PROMOSI → QC → Cloudinary → public media URL → Workflow 01 Publisher**
+
+Cloudinary bukan pengganti storage master produk.
+
+### 9.6 Fulfillment produk setelah pembelian
+
+Marketing/publication asset tidak menjadi file delivery pelanggan secara otomatis.
+
+Jika calon pembeli berminat:
+1. Iwan menangani komunikasi/pembayaran sesuai mekanisme penjualan.
+2. Setelah pembayaran diterima, **Iwan mengirim file/akses produk asli** dari storage asal yang sesuai.
+3. File asli tidak diambil dari salinan marketing Cloudinary kecuali memang secara khusus ditetapkan sebagai file delivery dan jalurnya sudah terbukti.
+
+GPT membantu menyiapkan proses dan materi, tetapi **fulfillment manual oleh Iwan tetap menjadi bagian yang ditetapkan pada arsitektur saat ini**.
+
+### 9.7 Hubungan empat workflow untuk satu produk nyata
+
+Untuk satu produk digital, pola utama adalah:
+
+**WORKFLOW 03 — WHAT TO MAKE**
+→ menentukan produk/material dan capability yang dibutuhkan
+
+**WORKFLOW 02 — HOW TO MAKE**
+→ memilih capability/method PASS
+→ produksi
+→ QC
+→ storage handoff
+→ Product Master/Output
+→ kembali ke Workflow 03
+→ READY TO SELL
+
+**WORKFLOW 04 — PRODUCT MARKETING / EXPLAINER**
+→ mengambil produk yang sudah nyata/QC PASS
+→ menjelaskan masalah, kegunaan, cara penggunaan, manfaat, visual produk, dan CTA
+→ tidak membocorkan cara produksi/recipe/prompt/internal production workflow
+→ QC
+→ Cloudinary untuk marketing media
+→ READY TO PUBLISH
+
+**WORKFLOW 01 — PUBLISHER**
+→ menerima marketing asset siap publish
+→ cek capability/koneksi
+→ cek asset dan riwayat
+→ validasi format
+→ publish/schedule melalui jalur publisher yang tersedia
+→ baca kembali status aktual
+→ laporkan PUBLISHED/SCHEDULED/PENDING/FAILED/BLOCKED/UNVERIFIED.
+
+### 9.8 Aturan Publisher yang tetap menjadi sumber utama
+
+Untuk publishing, **Workflow 01 adalah sumber aturan detail Publisher**. Prosedur umum tidak menggantikan aturan tersebut.
+
+GPT wajib mengikuti antara lain:
+- materi harus siap publish;
+- asset/reference harus cocok;
+- riwayat publikasi harus diperiksa sebelum publish;
+- **SCHEDULED/PENDING tidak sama dengan PUBLISHED**;
+- status publikasi harus dibaca kembali dari platform;
+- tidak boleh mengklaim “sudah posting/tayang” tanpa bukti status aktual;
+- Metricool tetap merupakan publisher yang sudah terbukti dan dipertahankan;
+- Cloudinary menjadi sumber media URL publik untuk media yang memang dipublikasikan melalui jalur tersebut;
+- jika jalur tidak tersedia/terbukti, laporkan BLOCKED/UNVERIFIED/MANUAL sesuai kondisi nyata.
+
+### 9.9 Anti-Lupa lintas-sesi
+
+Aturan ini harus diperlakukan sebagai **prosedur pembukaan sesi**, bukan sebagai informasi opsional dari percakapan sebelumnya.
+
+Urutan pembukaan:
+
+**GPT BARU MASUK**
+→ baca MASTER WORKSPACE
+→ baca PROSEDUR-UMUM
+→ baca checkpoint
+→ baca seluruh Workflow 01–04
+→ pahami hubungan antar-workflow
+→ identifikasi pekerjaan pengguna
+→ pilih workflow yang relevan
+→ gunakan aturan lokalnya
+→ baru eksekusi setelah izin yang diperlukan tersedia.
+
+Jika informasi pekerjaan spesifik belum tersedia, GPT boleh meminta hanya informasi yang benar-benar belum dapat ditemukan dari sumber yang sudah tersedia. GPT tidak boleh meminta pengguna mengulang aturan yang sudah terdokumentasi.
+
