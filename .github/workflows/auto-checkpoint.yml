@@ -1,0 +1,86 @@
+name: Auto Checkpoint Watchdog
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check idle state and create checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          FILE="CHECKPOINT-HARIAN.md"
+          THRESHOLD=3600
+
+          # Ignore watchdog-generated commits when finding the last real work commit.
+          LAST_REAL_SHA="$(git log --invert-grep --grep='AUTO-CHECKPOINT' -n 1 --format='%H')"
+          LAST_REAL_TIME="$(git show -s --format='%ct' "$LAST_REAL_SHA")"
+          NOW="$(date +%s)"
+          IDLE_SECONDS=$((NOW - LAST_REAL_TIME))
+
+          LAST_AUTO_SOURCE="$(grep -m1 'AUTO-CHECKPOINT SOURCE COMMIT TERAKHIR:' "$FILE" | sed 's/.*: //')"
+
+          echo "Last real commit: $LAST_REAL_SHA"
+          echo "Idle seconds: $IDLE_SECONDS"
+          echo "Last auto source: $LAST_AUTO_SOURCE"
+
+          if [ "$IDLE_SECONDS" -lt "$THRESHOLD" ]; then
+            echo "Idle threshold not reached. No checkpoint needed."
+            exit 0
+          fi
+
+          if [ "$LAST_AUTO_SOURCE" = "$LAST_REAL_SHA" ]; then
+            echo "This real commit already has an auto-checkpoint. No duplicate checkpoint."
+            exit 0
+          fi
+
+          TIMESTAMP="$(TZ=Asia/Jakarta date '+%d-%m-%Y | %H:%M WIB')"
+
+          cat >> "$FILE" <<EOF
+
+          ### [$TIMESTAMP]
+          **Pekerjaan:** AUTO-CHECKPOINT WATCHDOG — Last Known State repository.
+          **Workflow:** Sistem Global
+          **Status:** TERTUNDA
+          **Hasil/Bukti:** Tidak ada commit pekerjaan baru selama minimal 1 jam. Commit pekerjaan terakhir yang terdeteksi: `$LAST_REAL_SHA`.
+          **Masalah:** Watchdog hanya dapat membaca keadaan yang tersimpan di repository; isi percakapan ChatGPT yang belum tersimpan tidak tersedia bagi GitHub Actions.
+          **Tindakan berikutnya:** Pada sesi berikutnya, GPT membaca checkpoint ini dan melanjutkan dari Last Known State yang terdokumentasi.
+          **AUTO-CHECKPOINT SOURCE COMMIT TERAKHIR:** $LAST_REAL_SHA
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("CHECKPOINT-HARIAN.md")
+          s = p.read_text()
+          marker = "**AUTO-CHECKPOINT SOURCE COMMIT TERAKHIR:**"
+          lines = s.splitlines()
+          last_idx = max(i for i, line in enumerate(lines) if line.startswith(marker))
+          # Keep the newest marker in the top watchdog summary synchronized.
+          lines[last_idx] = marker + " " + lines[last_idx].split(":", 1)[1].strip()
+          # The newest appended log marker is already present; update the first summary marker.
+          summary_idx = next(i for i, line in enumerate(lines) if line.startswith(marker))
+          appended_idx = max(i for i, line in enumerate(lines) if line.startswith(marker))
+          if summary_idx != appended_idx:
+              value = lines[appended_idx].split(":", 1)[1].strip()
+              lines[summary_idx] = marker + " " + value
+          p.write_text("\n".join(lines) + "\n")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          git commit -m "AUTO-CHECKPOINT: save last known repository state"
+          git push
