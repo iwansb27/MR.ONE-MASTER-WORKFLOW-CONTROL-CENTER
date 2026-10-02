@@ -1,7 +1,7 @@
 # MR.ONE Workflow 02 — Production Engine
 
 **Status:** DRAFT / UNTESTED  
-**Versi:** 0.3  
+**Versi:** 0.4  
 **Fungsi:** Ruang produksi dan pengujian materi MR.ONE, sekaligus pusat memori prosedural untuk kemampuan produksi yang sudah terbukti.
 
 ## 1. Prinsip Utama
@@ -61,14 +61,6 @@ Kemampuan Production Engine mencakup bukan hanya **membuat materi**, tetapi juga
 | VERIFY / STATUS | Memeriksa keberadaan, status, hasil, atau keberhasilan operasi |
 
 **Setiap operasi adalah capability terpisah dan harus dibuktikan melalui uji nyata.**
-
-Contoh:
-- Upload = PASS
-- Download = PASS
-- Generate Video = UNTESTED
-- Delete = BLOCKED
-
-Status satu operasi tidak otomatis berlaku untuk operasi lain pada app yang sama.
 
 ### 2.3 Production Capability Registry
 
@@ -329,16 +321,51 @@ Jika hasil berupa media/content, gunakan jalur storage yang telah terbukti di Wo
 
 Jika hasil berupa file/document, gunakan jalur file yang telah terbukti.
 
-Production Engine mengetahui dan mencatat kemampuan operasional yang diperlukan untuk mencapai handoff, termasuk upload, save/store, retrieve, download/export, dan reference, tetapi **tidak mengambil alih kepemilikan aturan storage Workflow 00**.
+### 13.1 Adobe Express — capability yang sudah terbukti
 
-Production Engine menyerahkan:
-- metadata;
-- asset/reference;
-- provenance;
-- QC status;
-- handoff status.
+Adobe Express melalui connector MR.ONE telah diuji nyata untuk:
+- **SEARCH DESIGN** = PASS
+- **FILL TEXT** = PASS pada pengujian awal
+- **CHANGE BACKGROUND COLOR** = PASS
+- **ANIMATE DESIGN** = PASS
+- **DOWNLOAD/EXPORT PDF** = PASS
+- **EDITOR/PREVIEW REFERENCE** = PASS
+- **Adobe Express → Export PDF → Cloudinary → Retrieve/Verify** = PASS E2E
 
-Workflow 00 tetap memiliki tanggung jawab atas penyimpanan.
+Adobe Express dapat dipakai sebagai **storage/master workspace tambahan untuk kelas desain/dokumen yang sesuai**, tetapi status storage persisten dan delivery harus dicatat berdasarkan operasi yang benar-benar terbukti.
+
+**Tidak boleh disimpulkan:**
+- semua format export Adobe tersedia melalui connector;
+- semua jenis file dapat di-upload ke Adobe melalui connector;
+- Published/Share Link adalah direct-download link.
+
+### 13.2 Adobe reference vs direct download
+
+Untuk Adobe Express:
+- editor URL = REFERENCE / ACCESS;
+- preview URL = REFERENCE / PREVIEW;
+- exported PDF URL = DOWNLOAD/EXPORT output;
+- Published/Share Link sebagai customer access = **CANDIDATE/UNTESTED untuk direct-download delivery** sampai diuji sebagai pengguna publik.
+
+Jika customer delivery membutuhkan file download langsung dan Adobe belum terbukti memenuhi requirement tersebut, gunakan storage/delivery lane lain yang sudah PASS, misalnya Cloudinary bila batas file terpenuhi.
+
+### 13.3 File-size constraints
+
+Batas ukuran harus dicatat **per engine dan per storage**, bukan digabung.
+
+Untuk Adobe Express yang sudah diaudit:
+- Free account storage: **5 GB**
+- PDF input/import: hingga **99 MB**
+- image import desktop web: hingga **80 MB** untuk format gambar selain SVG; SVG hingga **250 KB**
+- beberapa video quick actions: hingga **1 GB**, dengan batas durasi yang bergantung pada operasi.
+
+Untuk Cloudinary yang sudah diaudit:
+- image/raw: **10 MB**
+- video: **100 MB**
+
+Karena itu file Adobe yang lebih besar dari batas Cloudinary tidak otomatis dapat dipindahkan ke Cloudinary. Pilihan harus ditentukan setelah QC dan pengecekan ukuran.
+
+Production Engine mencatat constraint ini; Workflow 00 tetap memiliki aturan routing storage.
 
 ## 14. Batas dengan Workflow Lain
 
@@ -397,6 +424,6 @@ Workflow 02 tidak:
 
 **DRAFT / UNTESTED.**
 
-Versi 0.3 menambahkan **kemampuan operasional sebagai inti fungsi Production Engine**: create, read, upload, save/store, download/export, retrieve/fetch, update/edit, delete, move/copy, preview, share/reference, transform/convert, API/automation, dan verify/status. Setiap kemampuan tetap harus diuji dan diberi status secara independen.
+Versi 0.4 menambahkan registry konkret untuk capability Adobe Express yang telah diuji, jalur Adobe Express sebagai storage/master workspace tambahan untuk kelas desain/dokumen yang sesuai, pembedaan reference vs direct-download delivery, serta pencatatan batas ukuran Adobe Express secara terpisah dari batas Cloudinary.
 
 Komponen konkret tetap harus ditambahkan **satu per satu setelah pengujian nyata**.
