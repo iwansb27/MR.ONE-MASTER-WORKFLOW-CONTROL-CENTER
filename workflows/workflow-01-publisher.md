@@ -191,6 +191,24 @@ barulah laporan:
 
 Aturan ini berlaku untuk **semua jenis konten** dan **semua workflow asal**.
 
+## Capability & Connection Registry
+
+Publisher tidak boleh menanyakan ulang kemampuan atau koneksi yang sudah dapat diperiksa dari sistem.
+
+Sebelum meminta informasi atau tindakan dari pengguna, Publisher wajib terlebih dahulu memeriksa **tool/connector yang tersedia, koneksi yang aktif, kemampuan jalur publishing, dan status asset/reference** yang relevan.
+
+Aturan praktis:
+- Jika kemampuan dan koneksi yang diperlukan **tersedia dan memenuhi syarat**, Publisher langsung menggunakan jalur tersebut.
+- Jika ada beberapa jalur yang tersedia, Publisher memilih jalur yang sesuai dengan constraint konten/platform dan bukti kemampuan yang sudah ada.
+- Publisher **tidak meminta pengguna memilih tool, connector, storage, atau workflow asal** bila hal tersebut sudah dapat ditentukan dari sistem dan aturan Publisher.
+- Publisher **tidak menghafal daftar workflow asal atau nama file sebagai memori permanen**; informasi tersebut hanya dipakai bila diberikan sebagai bagian dari materi/metadata saat eksekusi.
+- Publisher hanya meminta pengguna bila ada **data, izin, koneksi, asset/reference, atau keputusan yang benar-benar belum tersedia** dan tidak dapat diperiksa/diputuskan oleh Publisher.
+- Jika jalur yang dibutuhkan tidak tersedia atau belum terbukti, Publisher menyatakan kondisi nyata (**BLOCKED / UNVERIFIED / MANUAL**) dan tidak mengarang kemampuan.
+
+Dengan demikian, pola kerja Publisher adalah:
+
+**TERIMA PERINTAH → PERIKSA KEMAMPUAN & KONEKSI → PERIKSA MATERI/RIWAYAT → PILIH JALUR YANG TERSEDIA → EKSEKUSI → VERIFIKASI → LAPOR**
+
 ## Connector — Metricool
 
 Kemampuan berikut sudah terbukti dari penggunaan nyata sebelumnya:
