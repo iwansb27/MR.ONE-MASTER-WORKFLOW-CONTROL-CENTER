@@ -1,7 +1,7 @@
 # MR.ONE Workflow 01 — Publisher
 
 **Status:** LOGIKA & JALUR PUBLISHER TERBUKTI  
-**Versi:** 0.5  
+**Versi:** 0.6  
 **Fungsi:** Peta kerja tetap untuk mekanisme publishing, verifikasi, dan pengecekan riwayat publikasi MR.ONE.
 
 ## Prinsip Utama
@@ -95,6 +95,42 @@ Jika riwayat ditemukan dengan status **PUBLISHED**, Publisher melaporkan minimal
 
 Jika hanya ditemukan **DRAFT/PENDING/SCHEDULED**, Publisher harus melaporkan kondisi tersebut dan tidak boleh menyebut materi sudah tayang.
 
+## Aturan Metricool yang Dimantapkan
+
+Publisher harus membedakan **media URL** dan **link publikasi**:
+- **Media URL** = URL publik yang langsung menunjuk ke file gambar/video yang akan dikirim sebagai media. URL harus dapat diakses dan tidak kedaluwarsa.
+- **Publication link** = HTTPS URL yang dicantumkan di teks posting untuk preview/link tujuan. Ini bukan pengganti media URL.
+- Jika sebuah platform/format membutuhkan media, Publisher harus memenuhi kebutuhan format platform tersebut. Contoh: Instagram Post/Carousel membutuhkan image/video; Instagram Reel/Trial Reel membutuhkan video; TikTok membutuhkan image/video; YouTube membutuhkan video; Facebook Reel membutuhkan video. Persyaratan dapat berbeda menurut network dan format.
+
+### Pemeriksaan Riwayat Metricool
+
+**Jangan menganggap getScheduledPosts sebagai seluruh riwayat publikasi.** Tool tersebut digunakan untuk melihat posting yang masih berada dalam status scheduled/pending, bukan sebagai arsip lengkap semua konten yang sudah published.
+
+Untuk memeriksa apakah materi **sudah pernah tayang**, Publisher harus menggunakan sumber riwayat/analytics yang tersedia dan mencocokkan metadata yang relevan, misalnya:
+- content/text/title/caption,
+- media/reference atau URL bila tersedia,
+- tanggal publikasi,
+- channel/network,
+- jenis posting,
+- dan identitas lain yang tersedia.
+
+Jika ditemukan record yang cocok dengan status/indikasi **PUBLISHED**, **jangan membuat publikasi ulang**. Laporkan riwayat yang ditemukan.
+
+Jika ditemukan hanya **DRAFT/PENDING/SCHEDULED**, laporkan status tersebut dan jangan menyebutnya sudah tayang.
+
+Jika tidak ditemukan bukti riwayat yang cukup, status harus **UNVERIFIED**, bukan otomatis dianggap belum pernah publish. Publisher dapat menjalankan pemeriksaan yang lebih spesifik bila diperlukan.
+
+### Aturan Format dan Batas Platform
+
+Publisher tidak menghafal seluruh aturan setiap social network sebagai daftar terpisah di setiap workflow. Namun sebelum publishing, Publisher wajib menerapkan constraint yang relevan dari platform publishing yang digunakan: kebutuhan media, tipe post, batas teks, cover/thumbnail, privacy/audience, dan opsi khusus network.
+
+Jika suatu format tidak dapat dipublikasikan otomatis melalui connector/API dan memerlukan tindakan manual, Publisher harus menyatakan **MANUAL / BLOCKED / UNVERIFIED** sesuai kondisi nyata dan tidak mengklaim otomatis berhasil.
+
+### Anti-Duplikasi
+
+Urutan wajib:
+
+**IDENTIFIKASI MATERI → CEK SCHEDULED/PENDING → CEK RIWAYAT PUBLISHED → JIKA SUDAH PUBLISHED: STOP → JIKA BELUM ADA BUKTI PUBLISHED: VALIDASI FORMAT → PUBLISH/SCHEDULE → VERIFIKASI**
 ## Pemetaan Status Wajib
 
 Publisher harus memiliki laporan yang menunjukkan perjalanan job:
