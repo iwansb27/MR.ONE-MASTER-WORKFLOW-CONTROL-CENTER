@@ -322,3 +322,44 @@ Pola kerja:
 **PEKERJAAN HARIAN → CATAT HASIL → PERBARUI CHECKPOINT TERAKHIR → LANJUTKAN PEKERJAAN BERIKUTNYA**
 
 Pada pembukaan sesi, GPT membaca `PROSEDUR-UMUM.md` dan `CHECKPOINT-HARIAN.md` untuk mengetahui aturan serta posisi kerja terakhir sebelum masuk ke workflow yang relevan.
+
+## 11. AUTO-CHECKPOINT WATCHDOG — Penjaga Posisi Kerja
+
+Untuk mengurangi kehilangan konteks ketika percakapan berhenti, sinyal terputus, aplikasi ditutup, atau pekerjaan tidak dilanjutkan, repository menggunakan mekanisme **AUTO-CHECKPOINT WATCHDOG** melalui GitHub Actions.
+
+### 11.1 Prinsip
+
+- Watchdog berjalan berkala dari GitHub Actions.
+- Interval pemeriksaan ditetapkan **setiap 15 menit**, tetapi ambang idle yang memicu checkpoint adalah **1 jam tanpa commit pekerjaan baru**.
+- Watchdog memeriksa **commit pekerjaan terakhir yang bukan commit AUTO-CHECKPOINT**.
+- Jika commit pekerjaan tersebut telah berusia **1 jam atau lebih** dan belum pernah dibuatkan auto-checkpoint untuk commit tersebut, watchdog membuat catatan checkpoint otomatis.
+- Auto-checkpoint **tidak mengubah status PASS / FAIL / UNTESTED / BLOCKED** workflow.
+- Auto-checkpoint juga tidak boleh mengarang isi percakapan, pekerjaan, hasil, atau keputusan yang tidak tersimpan di repository.
+- Karena GitHub tidak mengetahui isi percakapan ChatGPT secara langsung, auto-checkpoint hanya dapat mencatat **Last Known State yang tersedia di repository**: commit terakhir, waktu, branch, dan status bahwa tidak ada perubahan repository selama ambang waktu.
+- Setelah auto-checkpoint dibuat, commit tersebut ditandai dengan identitas **AUTO-CHECKPOINT** sehingga watchdog tidak membuat salinan berulang untuk commit pekerjaan yang sama.
+
+### 11.2 Fungsi saat sesi berikutnya dibuka
+
+GPT wajib membaca:
+**PROSEDUR-UMUM.md → CHECKPOINT-HARIAN.md → AUTO-CHECKPOINT WATCHDOG → workflow relevan.**
+
+Jika percakapan sebelumnya berhenti tanpa penutupan normal, GPT menggunakan checkpoint terakhir dan auto-checkpoint sebagai **Last Known State**, lalu melanjutkan dari posisi yang terdokumentasi tanpa meminta pengguna mengulang aturan yang sudah tersedia.
+
+### 11.3 Batas mekanisme
+
+AUTO-CHECKPOINT adalah **penjaga keadaan repository**, bukan perekam isi percakapan secara real-time.
+
+Jika tidak ada commit karena pekerjaan hanya berlangsung di dalam percakapan dan belum menghasilkan perubahan repository, watchdog tidak dapat mengetahui detail pekerjaan tersebut. Untuk itu, pekerjaan penting yang menghasilkan perubahan konteks harus tetap dicatat melalui checkpoint normal ketika perubahan tersebut tersedia.
+
+### 11.4 Status panel
+
+`index.html` menyediakan panel kecil **AUTO-CHECKPOINT WATCHDOG** yang menjelaskan:
+- interval pemeriksaan: 15 menit;
+- ambang idle: 1 jam;
+- sumber keadaan: commit repository;
+- fungsi: mencatat Last Known State ketika tidak ada commit pekerjaan baru;
+- status terakhir dapat diperiksa melalui `CHECKPOINT-HARIAN.md`.
+
+Pola operasional:
+
+**PEKERJAAN → COMMIT / CHECKPOINT → TIDAK ADA COMMIT 1 JAM → WATCHDOG → AUTO-CHECKPOINT → SESI BARU MEMBACA LAST KNOWN STATE.**
