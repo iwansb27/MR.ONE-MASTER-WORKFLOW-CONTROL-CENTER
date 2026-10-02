@@ -34,6 +34,15 @@
       </article>
     </section>
 
+    <article class="card" style="margin-top:16px">
+      <h2>AUTO-CHECKPOINT WATCHDOG</h2>
+      <p>Status: <strong>AKTIF</strong></p>
+      <p>GitHub memeriksa repository setiap 15 menit. Jika tidak ada commit pekerjaan baru selama <strong>1 jam</strong>, sistem mencatat Last Known State ke Checkpoint Harian.</p>
+      <p><strong>Interval:</strong> 15 menit &nbsp; | &nbsp; <strong>Ambang:</strong> 1 jam tanpa commit</p>
+      <p>Catatan: watchdog hanya membaca keadaan yang tersimpan di repository, bukan isi percakapan ChatGPT yang belum disimpan.</p>
+      <a href="CHECKPOINT-HARIAN.md">Lihat Checkpoint Harian</a>
+    </article>
+
     <section class="grid" aria-label="MR.ONE workflows">
       <article class="card">
         <h2>Workflow 00 — Storage</h2>
