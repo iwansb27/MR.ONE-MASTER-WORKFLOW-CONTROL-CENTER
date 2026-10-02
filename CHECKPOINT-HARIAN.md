@@ -47,6 +47,16 @@ Setiap pekerjaan harian dicatat dengan:
 **Masalah:** Produk nyata belum dipilih/diproduksi.  
 **Tindakan berikutnya:** Mulai dari WF03 untuk menetapkan 1 produk nyata, lalu produksi melalui WF02 sampai READY TO SELL.
 
+## AUTO-CHECKPOINT WATCHDOG
+
+**Status:** AKTIF / MENUNGGU PEMERIKSAAN PERTAMA  
+**Interval pemeriksaan:** setiap 15 menit  
+**Ambang pemicu:** 1 jam tanpa commit pekerjaan baru  
+**Sumber Last Known State:** riwayat commit repository  
+**Fungsi:** jika tidak ada commit pekerjaan baru selama minimal 1 jam, GitHub Actions mencatat keadaan repository terakhir sebagai auto-checkpoint.  
+**Batas:** watchdog tidak dapat membaca isi percakapan ChatGPT yang belum tersimpan di repository dan tidak mengubah PASS/FAIL/UNTESTED/BLOCKED.  
+**AUTO-CHECKPOINT SOURCE COMMIT TERAKHIR:** BELUM ADA
+
 ## ATURAN PEMBARUAN
 
 1. Setiap perubahan pekerjaan penting membuat **CHECKPOINT TERAKHIR** diperbarui.
@@ -59,3 +69,12 @@ Setiap pekerjaan harian dicatat dengan:
 8. Checkpoint terakhir selalu menunjukkan **posisi kerja terbaru**, sedangkan log harian mempertahankan jejak pekerjaan sebelumnya.
 9. Materi kerja dapat berganti dari satu pekerjaan ke pekerjaan berikutnya; checkpoint mengikuti pekerjaan aktif, bukan mengunci materi lama.
 10. Checkpoint ini tidak boleh digunakan untuk mengubah status PASS/FAIL/UNTESTED/BLOCKED sebuah workflow tanpa bukti pengujian yang sesuai aturan workflow.
+
+
+### [02-10-2026 | 21:19 WIB]
+**Pekerjaan:** Menambahkan mekanisme AUTO-CHECKPOINT WATCHDOG sebagai penjaga posisi kerja repository.
+**Workflow:** WF00–WF04 / Sistem Global
+**Status:** SELESAI
+**Hasil/Bukti:** Aturan watchdog ditanam pada PROSEDUR-UMUM; checkpoint diberi panel konfigurasi interval 15 menit dan ambang idle 1 jam.
+**Masalah:** Isi percakapan yang belum tersimpan di repository tidak dapat dibaca oleh GitHub Actions.
+**Tindakan berikutnya:** GitHub Actions akan memeriksa repository secara berkala dan membuat auto-checkpoint bila syarat idle terpenuhi.
