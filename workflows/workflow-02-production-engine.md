@@ -1,429 +1,70 @@
 # MR.ONE Workflow 02 — Production Engine
 
-**Status:** DRAFT / UNTESTED  
-**Versi:** 0.4  
+**Status:** ACTIVE CHECKPOINT / PROVEN CAPABILITIES REGISTERED  
+**Versi:** 0.5  
 **Fungsi:** Ruang produksi dan pengujian materi MR.ONE, sekaligus pusat memori prosedural untuk kemampuan produksi yang sudah terbukti.
 
-## 1. Prinsip Utama
-
-Workflow 02 adalah **ruang produksi**, bukan sekadar daftar app/tool.
-
-Ia memahami hubungan antar-komponen yang diperlukan untuk menghasilkan materi, tetapi tetap menjaga batas:
+## 1. Peran Workflow 02
+Workflow 02 adalah **HOW TO MAKE**.
 - Workflow 00 = storage;
 - Workflow 01 = publishing;
-- Workflow 02 = produksi, operasi file/media, QC produksi, provenance, dan handoff.
-
-Pola kerja:
-
-**PERMINTAAN → IDENTIFIKASI MATERI → PETAKAN KEBUTUHAN → UJI TUNTAS KOMPONEN → PRODUKSI → OPERASI FILE/MEDIA → QC → STORAGE HANDOFF → HASIL/REFERENCE**
-
-Tidak ada app, connector, fungsi, metode produksi, atau jenis materi baru yang menjadi metode resmi hanya karena terlihat cocok.
-
-## 2. Arsitektur Memori Production Engine
-
-Production Engine menyimpan **pengetahuan prosedural dan registry kemampuan**, bukan menyalin fungsi workflow lain.
-
-### 2.1 Lima objek utama
-
-| Objek | Fungsi |
-|---|---|
-| APP / PLATFORM | Tempat kemampuan produksi berada |
-| CONNECTOR | Jalur akses MR.ONE ke app/platform |
-| FUNCTION | Operasi nyata yang terbukti, mis. generate/read/write/upload/retrieve |
-| PRODUCTION METHOD / RECIPE | Urutan fungsi yang terbukti untuk menghasilkan materi tertentu |
-| MATERIAL TYPE | Kelas hasil, mis. image, video, document, template, audio |
-
-Hubungan:
-
-**APP → CONNECTOR → FUNCTION → METHOD/RECIPE → MATERIAL TYPE**
-
-Nama app saja tidak cukup untuk menyatakan kemampuan.
-
-### 2.2 Kelas Kemampuan Operasional
-
-Kemampuan Production Engine mencakup bukan hanya **membuat materi**, tetapi juga kemampuan nyata untuk menangani hasil dan input produksi.
-
-| Kelas operasi | Arti operasional |
-|---|---|
-| CREATE / GENERATE | Membuat materi baru |
-| READ / OPEN | Membaca atau membuka materi/data |
-| UPLOAD / INGEST | Mengirim materi/data ke app/platform |
-| SAVE / STORE | Menyimpan secara persisten pada tujuan yang didukung |
-| DOWNLOAD / EXPORT | Mengeluarkan atau mengambil file/data ke lingkungan lain |
-| RETRIEVE / FETCH | Mengambil kembali asset/data berdasarkan ID, URL, atau reference |
-| UPDATE / EDIT | Mengubah materi/data yang sudah ada |
-| DELETE | Menghapus materi/data |
-| MOVE / COPY | Memindahkan atau menggandakan materi/data |
-| PREVIEW | Menampilkan hasil sebelum finalisasi |
-| SHARE / REFERENCE | Menghasilkan atau menggunakan ID/URL/reference yang dapat dipakai proses berikutnya |
-| TRANSFORM / CONVERT | Mengubah format, ukuran, dimensi, durasi, atau bentuk materi |
-| API / AUTOMATION | Menjalankan operasi melalui API/otomasi yang benar-benar tersedia |
-| VERIFY / STATUS | Memeriksa keberadaan, status, hasil, atau keberhasilan operasi |
-
-**Setiap operasi adalah capability terpisah dan harus dibuktikan melalui uji nyata.**
-
-### 2.3 Production Capability Registry
-
-Workflow 02 memiliki **Production Capability Registry** yang mencatat:
-- app/platform;
-- connector;
-- fungsi spesifik;
-- kelas operasi;
-- arah data/input-output;
-- input;
-- output;
-- limit/free limit yang terbukti;
-- persistence/save behavior;
-- retrieval method;
-- reference type (ID/URL/path atau lainnya);
-- file/media constraints;
-- dependency;
-- kebutuhan akun/API key;
-- watermark/license/commercial-use bila relevan;
-- bukti uji;
-- tanggal uji;
-- status PASS/FAIL/BLOCKED/UNTESTED/CANDIDATE.
-
-**Status berlaku per operasi/fungsi, bukan otomatis ke seluruh app.**
-
-Satu app boleh memiliki:
-- Generate Image = PASS
-- Generate Video = UNTESTED
-- Upload = BLOCKED
-- Retrieve Asset = PASS
-- Delete Asset = UNTESTED
-
-### 2.4 Aturan Istilah Operasional
-
-Agar tidak terjadi kekeliruan antara fungsi yang terlihat mirip:
-
-- **Save/Store** = data/file benar-benar dipersistenkan pada tujuan penyimpanan yang didukung.
-- **Upload** = data/file dikirim masuk ke app/platform.
-- **Download/Export** = file/data dikeluarkan dari app/platform ke lingkungan lain.
-- **Retrieve/Fetch** = asset/data yang sudah ada diambil kembali melalui ID, URL, reference, atau mekanisme resmi lainnya.
-- **Delete** = data/file benar-benar dihapus dan hasil penghapusan dapat diverifikasi.
-- **Share/Reference** = sistem menghasilkan atau menyediakan reference yang dapat digunakan proses berikutnya.
-- **Preview** = hasil dapat dilihat/diperiksa sebelum finalisasi.
-- **API/Automation** = operasi dapat dijalankan melalui jalur API/otomasi yang tersedia dan telah diuji.
-
-Klaim bahwa sebuah app “bisa menyimpan”, “bisa upload”, atau “bisa download” belum menjadi PASS sampai jalur operasional MR.ONE terbukti.
-
-## 3. Material Production Registry
-
-Setiap jenis materi yang benar-benar akan diproduksi mempunyai profil.
-
-Minimal:
-- nama kelas materi;
-- tujuan penggunaan;
-- input wajib;
-- output;
-- format;
-- ukuran/dimensi/durasi bila relevan;
-- kualitas minimum;
-- metadata wajib;
-- QC profile;
-- storage handoff;
-- downstream compatibility;
-- watermark/license;
-- repeatability;
-- status.
-
-**Jenis materi adalah kelas produksi, bukan nama file individual.**
-
-Konsep:
-
-**MATERIAL TYPE → PRODUCTION RECIPE → OUTPUT → QC PROFILE → STORAGE HANDOFF**
-
-Nama file, judul file, dan asset ID tertentu tidak menjadi memori permanen workflow.
-
-## 4. Metadata Contract
-
-Production Engine harus mengetahui **metadata yang wajib dibawa bersama materi**, tanpa mengambil alih penyimpanan atau publishing.
-
-Metadata minimal:
-- Job/Production ID;
-- material type;
-- production purpose;
-- input/source reference;
-- production method;
-- app/platform;
-- connector/function;
-- operation type bila ada operasi file/media;
-- output format;
-- dimensions/duration bila relevan;
-- QC status;
-- asset/reference;
-- storage status;
-- handoff status;
-- notes/issues.
-
-Metadata adalah **kontrak informasi**, bukan storage.
-
-## 5. Provenance / Jejak Produksi
-
-Setiap hasil produksi yang dinyatakan siap harus dapat ditelusuri:
-
-**INPUT/SOURCE → METHOD → APP/CONNECTOR/FUNCTION → OPERATION → OUTPUT → QC → STORAGE REFERENCE → HANDOFF**
-
-Tujuan:
-- mengetahui bagaimana materi dibuat;
-- mengetahui tool/fungsi yang digunakan;
-- mengetahui bagaimana file/media dipindahkan atau disimpan;
-- mengulang produksi;
-- mencari titik kegagalan;
-- membedakan hasil nyata dari asumsi.
-
-Jika provenance penting belum tersedia, hasil tidak boleh dianggap PASS final.
-
-## 6. QC Profile
-
-QC tidak dibuat sebagai daftar umum saja. Setiap material type dapat memiliki **QC Profile**.
-
-QC minimum:
-1. hasil benar-benar ada;
-2. hasil dapat dibuka/diakses;
-3. format benar;
-4. isi sesuai permintaan;
-5. kualitas minimum terpenuhi;
-6. metadata wajib ada;
-7. asset/reference dapat digunakan;
-8. tidak ada error yang diketahui;
-9. status pengujian jelas.
-
-QC tambahan ditentukan berdasarkan jenis materi.
-
-## 7. Jalur Produksi Lengkap
-
-**PERMINTAAN PRODUKSI**  
-↓  
-**PRODUCTION INTAKE**  
-↓  
-**IDENTIFIKASI MATERIAL TYPE**  
-↓  
-**CEK CAPABILITY REGISTRY**  
-↓  
-**PILIH METHOD/RECIPE YANG SUDAH PASS**  
-↓  
-**JALANKAN APP + CONNECTOR + FUNCTION**  
-↓  
-**OPERASI INPUT/OUTPUT FILE ATAU MEDIA BILA DIPERLUKAN**  
-↓  
-**HASIL PRODUKSI**  
-↓  
-**QC PROFILE**  
-↓  
-**METADATA CONTRACT**  
-↓  
-**WORKFLOW 00 STORAGE HANDOFF**  
-↓  
-**ASSET + REFERENCE**  
-↓  
-**HANDOFF**
-
-Jika belum ada method yang PASS, jangan membangun pipeline besar. Masuk ke jalur uji tuntas.
-
-## 8. Production Intake
-
-Sebelum produksi, tentukan:
-- apa yang ingin dibuat;
-- material type;
-- tujuan;
-- input yang tersedia;
-- output yang dibutuhkan;
-- operasi file/media yang dibutuhkan;
-- metadata wajib;
-- QC profile;
-- storage requirement;
-- dependency;
-- capability yang dibutuhkan.
-
-Kemudian cari **kemampuan yang sudah PASS**.
-
-Jika tidak ada:
-
-**CANDIDATE/UNTESTED → UJI KECIL → VERIFIKASI → PASS atau FAIL/BLOCKED**
-
-## 9. Uji Tuntas Komponen
-
-Setiap app/platform/connector/function baru wajib diperiksa:
-- fungsi sebenarnya;
-- akses/koneksi;
-- input/output;
-- limit/free limit;
-- akun/API key;
-- kemampuan create/read/upload/save/download/retrieve/update/delete/preview/reference/transform bila relevan;
-- automation/API;
-- watermark;
-- lisensi/commercial use;
-- dependency;
-- risiko lock-in/kegagalan;
-- bukti nyata.
-
-Informasi promosi atau klaim situs bukan bukti kemampuan operasional MR.ONE.
-
-## 10. Uji Tuntas Material
-
-Setiap material type baru diperiksa:
-- tujuan;
-- input;
-- output;
-- format;
-- kualitas;
-- ukuran/dimensi/durasi;
-- metadata;
-- operasi file/media yang diperlukan;
-- storage compatibility;
-- downstream compatibility;
-- watermark/license;
-- verifiability;
-- repeatability.
-
-## 11. Tahapan Uji
-
-### A — Identifikasi
-Tentukan kebutuhan produksi dan capability yang diperlukan.
-
-### B — Audit Kandidat
-Petakan kandidat app/platform/connector/function/method dan operasi yang dibutuhkan.
-
-Status awal:
-- CANDIDATE
-- UNTESTED
-
-### C — Uji Nyata
-Gunakan input kecil dan terkontrol.
-
-### D — Verifikasi
-Periksa output, format, kualitas, reference, persistence, retrieval, dependency, dan error.
-
-### E — Penetapan Status
-- **PASS** — terbukti sesuai kebutuhan.
-- **FAIL** — diuji dan tidak memenuhi kebutuhan.
-- **BLOCKED** — terhenti karena akses, izin, limit, koneksi, atau dependency.
-- **UNTESTED** — belum diuji.
-- **CANDIDATE** — kandidat belum resmi.
-
-Hanya **PASS** yang boleh menjadi capability/method resmi.
-
-## 12. Proof Before Build
-
-Urutan wajib:
-
-**AUDIT → TEST KECIL → VERIFIKASI → PASS → FORMALKAN → PERLUAS**
-
-Jangan membangun pipeline besar sebelum satu metode kecil terbukti.
-
-## 13. Storage Handoff
-
-Production Engine **bukan storage utama**.
-
-Jika hasil berupa media/content, gunakan jalur storage yang telah terbukti di Workflow 00.
-
-Jika hasil berupa file/document, gunakan jalur file yang telah terbukti.
-
-### 13.1 Adobe Express — capability yang sudah terbukti
-
-Adobe Express melalui connector MR.ONE telah diuji nyata untuk:
-- **SEARCH DESIGN** = PASS
-- **FILL TEXT** = PASS pada pengujian awal
-- **CHANGE BACKGROUND COLOR** = PASS
-- **ANIMATE DESIGN** = PASS
-- **DOWNLOAD/EXPORT PDF** = PASS
-- **EDITOR/PREVIEW REFERENCE** = PASS
-- **Adobe Express → Export PDF → Cloudinary → Retrieve/Verify** = PASS E2E
-
-Adobe Express dapat dipakai sebagai **storage/master workspace tambahan untuk kelas desain/dokumen yang sesuai**, tetapi status storage persisten dan delivery harus dicatat berdasarkan operasi yang benar-benar terbukti.
-
-**Tidak boleh disimpulkan:**
-- semua format export Adobe tersedia melalui connector;
-- semua jenis file dapat di-upload ke Adobe melalui connector;
-- Published/Share Link adalah direct-download link.
-
-### 13.2 Adobe reference vs direct download
-
-Untuk Adobe Express:
-- editor URL = REFERENCE / ACCESS;
-- preview URL = REFERENCE / PREVIEW;
-- exported PDF URL = DOWNLOAD/EXPORT output;
-- Published/Share Link sebagai customer access = **CANDIDATE/UNTESTED untuk direct-download delivery** sampai diuji sebagai pengguna publik.
-
-Jika customer delivery membutuhkan file download langsung dan Adobe belum terbukti memenuhi requirement tersebut, gunakan storage/delivery lane lain yang sudah PASS, misalnya Cloudinary bila batas file terpenuhi.
-
-### 13.3 File-size constraints
-
-Batas ukuran harus dicatat **per engine dan per storage**, bukan digabung.
-
-Untuk Adobe Express yang sudah diaudit:
-- Free account storage: **5 GB**
-- PDF input/import: hingga **99 MB**
-- image import desktop web: hingga **80 MB** untuk format gambar selain SVG; SVG hingga **250 KB**
-- beberapa video quick actions: hingga **1 GB**, dengan batas durasi yang bergantung pada operasi.
-
-Untuk Cloudinary yang sudah diaudit:
-- image/raw: **10 MB**
-- video: **100 MB**
-
-Karena itu file Adobe yang lebih besar dari batas Cloudinary tidak otomatis dapat dipindahkan ke Cloudinary. Pilihan harus ditentukan setelah QC dan pengecekan ukuran.
-
-Production Engine mencatat constraint ini; Workflow 00 tetap memiliki aturan routing storage.
-
-## 14. Batas dengan Workflow Lain
-
-### Workflow 00 — Storage
-Memegang penyimpanan dan reference storage.
-
-### Workflow 02 — Production Engine
-Memegang produksi, capability registry, operasi file/media yang terbukti, material recipe, provenance, QC produksi, metadata contract, dan storage handoff.
-
-### Workflow 01 — Publisher
-Memegang publikasi dan verifikasi status publikasi.
-
-Production Engine tidak perlu menghafal nama/nomor workflow downstream untuk setiap material. Ia hanya harus menghasilkan **handoff contract yang lengkap**.
-
-## 15. Fallback
-
-Jika method utama:
-- tidak tersedia → cari capability kandidat yang sudah diaudit;
-- gagal → FAIL dan uji kandidat lain;
-- terblokir → BLOCKED;
-- belum terbukti → UNTESTED.
-
-Jangan mengganti metode secara diam-diam.
-
-## 16. Catatan Pengujian
-
-Setiap pengujian resmi minimal mencatat:
-- tanggal;
-- tujuan;
-- material type;
-- app/platform;
-- connector/function;
-- operation type;
-- method/recipe;
-- input;
-- output;
-- metadata;
-- provenance;
-- QC;
-- evidence/reference;
-- masalah;
-- status.
-
-## 17. Batas Workflow 02
-
-Workflow 02 tidak:
-- menjadi Publisher;
-- menjadi storage utama;
-- menganggap semua app otomatis boleh digunakan;
-- menganggap semua material otomatis siap;
-- mengunci tool sebelum diuji;
-- mengklaim keberhasilan tanpa bukti;
-- menyimpan nama file/asset individual sebagai prosedur permanen.
-
-## 18. Status Dokumen
-
-**DRAFT / UNTESTED.**
-
-Versi 0.4 menambahkan registry konkret untuk capability Adobe Express yang telah diuji, jalur Adobe Express sebagai storage/master workspace tambahan untuk kelas desain/dokumen yang sesuai, pembedaan reference vs direct-download delivery, serta pencatatan batas ukuran Adobe Express secara terpisah dari batas Cloudinary.
-
-Komponen konkret tetap harus ditambahkan **satu per satu setelah pengujian nyata**.
+- Workflow 02 = produksi, capability registry, recipe/method, operasi file/media, provenance, QC produksi, metadata contract, dan handoff.
+
+Alur: **PRODUK/MATERIAL DARI WORKFLOW 03 → CEK CAPABILITY → PILIH METHOD PASS → PRODUKSI → QC → STORAGE HANDOFF → HASIL/REFERENCE → KEMBALI KE WORKFLOW 03**
+
+## 2. Prinsip Wajib
+1. Proof Before Build.
+2. App ≠ Capability.
+3. Status PASS berlaku per operasi/fungsi yang benar-benar diuji.
+4. AUDIT → TEST KECIL → VERIFIKASI → PASS → FORMALKAN → PERLUAS.
+5. Jika capability belum terbukti: UNTESTED/CANDIDATE; jangan dipaksakan.
+6. Jika gagal: FAIL. Jika akses/izin/limit menghalangi: BLOCKED.
+7. Tidak membangun pipeline besar sebelum metode kecil terbukti.
+8. Tidak mengganti tool/method secara diam-diam.
+9. Hasil produksi belum otomatis READY TO SELL; tetap wajib QC dan status Workflow 03.
+10. Jika capability PASS yang ada sudah cukup, jangan mencari app baru tanpa kebutuhan nyata.
+
+## 3. Capability Registry — PASS Resmi Saat Ini
+
+### 3.1 Adobe Express — Design/PDF
+Terbukti: search/select free template, fill/edit text, change background color, animate design, export/download PDF, dan Adobe Express PDF → Cloudinary → retrieve/verify = PASS E2E.
+Peran: engine produksi desain/dokumen/PDF yang sesuai.
+Catatan: editor/preview reference ≠ direct-download customer delivery; tidak semua format/export Adobe otomatis PASS.
+
+### 3.2 Airtable — Data / Formula / Tracker
+Terbukti: membuat table/field/record, menulis data, membuat formula, membaca hasil perhitungan, serta engine DP-02, DP-05, DP-06, dan DP-10 = PASS.
+Contoh uji: DP-02 net balance 65000; DP-05 current stock 23 dan stock value 230000; DP-06 net profit 50000 dan margin 50%; DP-10 remaining 65000.
+Catatan: attachment storage/read = PASS; temporary attachment URL retrieval = PASS; Airtable → GPT → Cloudinary direct automated handoff = BLOCKED pada uji safety check.
+
+### 3.3 Cloudinary — Video / Media Transformation
+Cloudinary telah diuji sebagai **media engine**, bukan full timeline editor.
+Terbukti: video 9:16/resize-crop, trim/duration, chained transformation, text overlay, image overlay, dan public secure video URL/reference = PASS.
+Contoh final MR.ONE: 0–3 detik MR.ONE | VIDEO TEST; 3–7 detik VIDEO PENDEK | CONTOH MR.ONE; 7–10 detik CEK LINK DI DESKRIPSI; output MP4 1080×1920 = PASS.
+Batas: bukan editor timeline kreatif penuh. Multi-clip storytelling kompleks, musik/SFX/voice-over, dan AI text-to-video belum PASS. Splice/transition syntax belum dianggap sebagai bukti penuh multi-asset composition. AI/generative video = UNTESTED.
+
+## 4. Production Recipe Registry
+1. Design/PDF recipe → Adobe Express → export PDF → QC → handoff.
+2. Data/Formula recipe → Airtable → table/fields/formula/records → readback calculation → QC.
+3. Short Video recipe → Cloudinary → 9:16/trim/overlay/transformation → MP4 → QC → public reference.
+Recipe kreatif yang belum diuji tetap UNTESTED.
+
+## 5. QC Minimum
+1. hasil benar-benar ada; 2. dapat dibuka/diakses; 3. format benar; 4. isi sesuai; 5. kualitas minimum; 6. metadata/reference tersedia; 7. handoff dapat dilakukan atau status jelas; 8. tidak ada error diketahui; 9. status PASS/FAIL/BLOCKED/UNTESTED jelas.
+
+## 6. Provenance
+INPUT/SOURCE → METHOD → APP/CONNECTOR/FUNCTION → OPERATION → OUTPUT → QC → STORAGE REFERENCE → HANDOFF.
+
+## 7. Metadata Contract
+Minimal: Job/Production ID, material type, purpose, input/source reference, method/recipe, app/platform, connector/function, operation, output format, dimensions/duration bila relevan, QC status, asset/reference, storage status, handoff status, notes/issues.
+
+## 8. Jalur Produksi Gabungan dengan Workflow 03
+WORKFLOW 03 — WHAT TO MAKE → CEK CAPABILITY WORKFLOW 02 → PILIH RECIPE PASS → PRODUKSI → QC/VERIFY → MASTER ASSET/OUTPUT → STORAGE HANDOFF WORKFLOW 00 → HASIL + REFERENCE KEMBALI KE WORKFLOW 03 → READY TO SELL/LISTING setelah syarat Workflow 03 terpenuhi.
+
+## 9. Fallback
+Unavailable → candidate teraudit; gagal → FAIL; blocked → BLOCKED; belum diuji → UNTESTED. Tidak ada silent substitution.
+
+## 10. Batas
+Workflow 02 tidak menjadi Publisher, storage utama, pengunci app tanpa uji, atau penentu bahwa engine PASS berarti produk siap jual.
+
+## 11. Status Dokumen
+**ACTIVE CHECKPOINT / PROVEN CAPABILITIES REGISTERED.** Checkpoint ini mencatat hasil nyata yang sudah terbukti sampai tahap video sederhana: Adobe Express + Airtable + Cloudinary. Capability baru mengikuti lifecycle uji yang sama.
