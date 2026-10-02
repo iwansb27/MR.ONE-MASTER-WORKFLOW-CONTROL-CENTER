@@ -297,3 +297,28 @@ Urutan pembukaan:
 
 Jika informasi pekerjaan spesifik belum tersedia, GPT boleh meminta hanya informasi yang benar-benar belum dapat ditemukan dari sumber yang sudah tersedia. GPT tidak boleh meminta pengguna mengulang aturan yang sudah terdokumentasi.
 
+
+## 10. Checkpoint Harian dan Catatan Kerja
+
+`CHECKPOINT-HARIAN.md` adalah **titik checkpoint operasional** yang berada di sebelah `PROSEDUR-UMUM.md` pada root repository.
+
+Fungsinya bukan menggantikan Prosedur Umum atau aturan workflow, tetapi menjaga **posisi kerja terakhir dan catatan laporan harian** agar pekerjaan dapat dilanjutkan tanpa kehilangan konteks operasional.
+
+Aturan:
+- Checkpoint terakhir selalu diperbarui mengikuti **pekerjaan aktif terbaru**.
+- Setiap update wajib mencantumkan **tanggal, jam, bulan, dan tahun**.
+- Catatan harian bersifat berurutan dan tidak menghapus riwayat pekerjaan sebelumnya.
+- Setiap pekerjaan dicatat dengan salah satu status operasional: **SELESAI / TERTUNDA / TROUBLE / ERROR**.
+- **SELESAI** hanya digunakan bila pekerjaan telah selesai dan hasilnya dapat diverifikasi.
+- **TERTUNDA** harus mencantumkan alasan dan langkah berikutnya.
+- **TROUBLE** digunakan untuk masalah operasional yang belum terselesaikan.
+- **ERROR** digunakan untuk kegagalan/error teknis dan harus mencatat bukti atau penyebab bila diketahui.
+- Materi/checkpoint dapat berganti mengikuti pekerjaan harian; checkpoint tidak mengunci materi lama sebagai materi produksi.
+- Materi contoh/testing dapat diganti dengan materi pekerjaan nyata sesuai tahap proyek, tetapi bukti audit pengujian yang masih diperlukan tidak boleh dihapus sembarangan.
+- Checkpoint harian **tidak boleh mengubah PASS / FAIL / UNTESTED / BLOCKED** workflow tanpa bukti pengujian sesuai aturan Workflow Control Center.
+
+Pola kerja:
+
+**PEKERJAAN HARIAN → CATAT HASIL → PERBARUI CHECKPOINT TERAKHIR → LANJUTKAN PEKERJAAN BERIKUTNYA**
+
+Pada pembukaan sesi, GPT membaca `PROSEDUR-UMUM.md` dan `CHECKPOINT-HARIAN.md` untuk mengetahui aturan serta posisi kerja terakhir sebelum masuk ke workflow yang relevan.
