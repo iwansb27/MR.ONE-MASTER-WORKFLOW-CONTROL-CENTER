@@ -1,7 +1,7 @@
 # MR.ONE MASTER CONTROL
 
 **Status:** ACTIVE — MASTER INDEX  
-**Versi:** 1.0  
+**Versi:** 1.1  
 **Fungsi:** Peta utama MR.ONE untuk menemukan paket pekerjaan, aturan, tools/connectors, checkpoint, dan lokasi pekerjaan tanpa mencampur pekerjaan antar-domain.
 
 ## 1. Prinsip
@@ -18,17 +18,36 @@ Setiap paket berdiri sebagai domain kerja terpisah. Paket baru dapat ditambahkan
 
 ## 2. Paket Pekerjaan
 
-| Paket | Nama | Fungsi | Status | Isi utama |
-|---|---|---|---|---|
-| 01 | Digital Product + Marketing | Produk digital dari WHAT TO MAKE sampai marketing/publishing | ACTIVE | WF-00–WF-04 |
-| 02 | Recording / Meeting / Bar Files | Rekaman, meeting, bar files, dan pengelolaan hasil rekaman | PLANNED | Akan diisi setelah audit |
-| 03 | Building / App & Tool Development | Pembuatan dan pengembangan aplikasi/tool | PLANNED | Akan diisi setelah audit |
-| 04 | Content / Video | Pekerjaan konten/video yang berdiri sebagai domain tersendiri | PLANNED | Akan diisi setelah audit |
-| 05+ | Paket tambahan | Domain baru sesuai kebutuhan | EXTENSIBLE | Dibuat hanya bila diperlukan |
+| Paket | Nama | Fungsi | Status | Isi utama | Auto Checkpoint |
+|---|---|---|---|---|---|
+| 01 | Digital Product + Marketing | Produk digital dari WHAT TO MAKE sampai marketing/publishing | ACTIVE | WF-00–WF-04 | `packages/P01-AUTO-CHECKPOINT.md` |
+| 02 | Recording / Meeting / Bar Files | Rekaman, meeting, bar files, dan pengelolaan hasil rekaman | PLANNED | Akan diisi setelah audit | `packages/P02-AUTO-CHECKPOINT.md` |
+| 03 | Building / App & Tool Development | Pembuatan dan pengembangan aplikasi/tool | PLANNED | Akan diisi setelah audit | `packages/P03-AUTO-CHECKPOINT.md` |
+| 04 | Content / Video | Pekerjaan konten/video yang berdiri sebagai domain tersendiri | PLANNED | Akan diisi setelah audit | `packages/P04-AUTO-CHECKPOINT.md` |
+| 05+ | Paket tambahan | Domain baru sesuai kebutuhan | EXTENSIBLE | Dibuat hanya bila diperlukan | Wajib dibuat bersama paket |
 
 **Catatan penting:** WF-00–WF-04 tetap satu kesatuan di **Paket 01**. Tidak dipecah menjadi paket terpisah.
 
-## 3. Paket 01 — Digital Product + Marketing
+## 3. Auto Checkpoint Per Paket
+
+**Checkpoint operasional utama berada di dalam masing-masing paket.**
+
+Setiap paket memiliki satu file **AUTO CHECKPOINT** yang menyimpan posisi terakhir paket tersebut secara mandiri.
+
+Aturan:
+- Status Paket 01 tidak mengubah status Paket 02.
+- Pekerjaan Paket 03 tidak menimpa checkpoint Paket 04.
+- Jika satu paket tertunda, status tertundanya tetap terlihat sampai paket itu dilanjutkan.
+- Saat pekerjaan dalam suatu paket berubah, **AUTO CHECKPOINT paket tersebut** yang diperbarui.
+- Master Control hanya menunjuk ke checkpoint paket; tidak mengambil alih detailnya.
+
+### Global checkpoint
+
+`CHECKPOINT-HARIAN.md` di root sekarang berfungsi sebagai **GLOBAL SNAPSHOT / INDEX STATUS**, bukan sebagai tempat detail checkpoint setiap pekerjaan.
+
+Global snapshot boleh merangkum status paket, tetapi detail posisi, pekerjaan terakhir, yang tertunda, hambatan, dan langkah berikutnya berada di AUTO CHECKPOINT paket masing-masing.
+
+## 4. Paket 01 — Digital Product + Marketing
 
 **Tujuan:** mengelola alur produk digital dan pemasaran berdasarkan workflow yang sudah terbukti/didokumentasikan.
 
@@ -53,7 +72,7 @@ Setiap paket berdiri sebagai domain kerja terpisah. Paket baru dapat ditambahkan
 
 Detail dan status resmi tetap berada di file workflow masing-masing.
 
-## 4. Cara Menggunakan Master Control
+## 5. Cara Menggunakan Master Control
 
 Saat GPT menerima pekerjaan MR.ONE:
 
@@ -61,17 +80,16 @@ Saat GPT menerima pekerjaan MR.ONE:
 2. Baca **MASTER-CONTROL.md** untuk mengetahui paket/domain.
 3. Tentukan paket berdasarkan jenis pekerjaan.
 4. Buka dokumen paket tersebut.
-5. Ikuti workflow lokal yang dirujuk paket.
-6. Baca checkpoint yang relevan.
+5. Baca **AUTO CHECKPOINT paket tersebut**.
+6. Ikuti workflow lokal yang dirujuk paket.
 7. Verifikasi tools/connectors sebelum eksekusi.
 8. Untuk perubahan teknis yang memerlukan persetujuan owner, tunggu **LANJUTKAN**.
 
 Jika pekerjaan tidak cocok dengan paket yang tersedia, **jangan memasukkannya secara diam-diam** ke paket lain. Tandai sebagai kebutuhan paket baru atau minta keputusan owner.
 
-## 5. Informasi yang Wajib Dimiliki Setiap Paket
+## 6. Informasi yang Wajib Dimiliki Setiap Paket
 
 Setiap dokumen paket harus menjelaskan:
-
 - tujuan paket;
 - jenis pekerjaan;
 - batas paket;
@@ -79,36 +97,38 @@ Setiap dokumen paket harus menjelaskan:
 - tools/apps;
 - connectors;
 - storage;
-- checkpoint;
+- **AUTO CHECKPOINT**;
 - lokasi pekerjaan nyata;
 - status PASS / FAIL / UNTESTED / BLOCKED / PLANNED;
 - aturan lintas-paket bila ada.
 
-## 6. Aturan Pemisahan
+## 7. Aturan Pemisahan
 
 - Satu paket = satu domain pekerjaan.
+- Satu paket = satu AUTO CHECKPOINT operasional.
 - Workflow di dalam paket tidak boleh dipindahkan hanya untuk merapikan tampilan.
 - Aset tidak dipindahkan ke Master Control hanya karena terdaftar di sana.
 - Tool/connector hanya dicatat bila relevan dan statusnya dapat diverifikasi.
 - Master Control menunjuk lokasi pekerjaan; Master Control bukan lokasi pekerjaan itu sendiri.
 - Penambahan paket dilakukan secara terkontrol.
 
-## 7. Checkpoint Master Control
+## 8. Checkpoint Master Control
 
 **Tanggal:** 2026-10-03
 
-**Status pekerjaan:** DESAIN MASTER CONTROL DITERAPKAN.
+**Status pekerjaan:** STRUKTUR AUTO CHECKPOINT PER PAKET DITERAPKAN.
 
 **Sudah dibuat:**
 - Master Control index.
 - Registry Paket 01–04 + struktur extensible 05+.
+- AUTO CHECKPOINT terpisah untuk Paket 01–04.
 - Paket 01 mengikat WF-00–WF-04 sebagai satu kesatuan.
-- Paket 02–04 ditandai PLANNED agar pekerjaan baru tidak tercampur ke Paket 01.
+- Root `CHECKPOINT-HARIAN.md` ditetapkan sebagai global snapshot/index.
+- Paket 02–04 tetap terpisah dan tidak tercampur ke Paket 01.
 
 **Belum dilakukan:**
 - Rename repository.
-- Pembangunan UI dashboard final.
-- Pengisian detail Paket 02–04.
-- Pemindahan/penyusunan ulang workflow lama.
+- Pengisian detail workflow Paket 02–04.
+- Perubahan struktur workflow lama.
 
 **Aturan:** jangan rename repo sebelum struktur Master Control dan UI terbukti sesuai.
