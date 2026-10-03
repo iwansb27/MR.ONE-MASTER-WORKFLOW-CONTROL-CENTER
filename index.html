@@ -1,71 +1,29 @@
 <!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MR.ONE Master Control</title>
-  <style>
-    body{font-family:system-ui,sans-serif;max-width:980px;margin:0 auto;padding:28px 18px;line-height:1.5}
-    header{padding:22px 0 8px}.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em}
-    h1{margin:6px 0;font-size:32px}.lead{max-width:760px}
-    .status{display:inline-block;padding:4px 10px;border:1px solid #999;border-radius:999px;font-size:13px}
-    .section{margin-top:28px}.section h2{margin-bottom:8px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
-    .card{border:1px solid #ccc;border-radius:12px;padding:16px}
-    .card h3{margin-top:0}.card p{margin:8px 0 14px}
-    a{font-weight:700}.muted{opacity:.75;font-size:14px}
-    .route{border:1px solid #ccc;border-radius:12px;padding:14px;margin-top:14px;font-weight:650}
-  </style>
-</head>
-<body>
-  <main>
-    <header>
-      <div class="eyebrow">MR.ONE</div>
-      <h1>MASTER CONTROL</h1>
-      <p class="lead">Peta utama untuk menemukan <strong>paket pekerjaan → workflow → checkpoint → lokasi kerja</strong>. Master Control bukan production center dan bukan storage aset.</p>
-      <span class="status">FOUNDATION: PASS</span>
-    </header>
-
-    <section class="section">
-      <h2>🚦 Mulai dari sini</h2>
-      <div class="route">STARTUP-GATE → MASTER CONTROL → PILIH PAKET → BUKA WORKFLOW → CEK CHECKPOINT → EKSEKUSI</div>
-      <div class="grid">
-        <article class="card"><h3>📍 Master Control</h3><p>Registry paket dan aturan pemisahan domain.</p><a href="MASTER-CONTROL.md">Buka Master Control</a></article>
-        <article class="card"><h3>📋 Checkpoint Harian</h3><p>Posisi kerja terbaru, bukti, masalah, dan next step.</p><a href="CHECKPOINT-HARIAN.md">Buka Checkpoint</a></article>
-        <article class="card"><h3>📜 Prosedur Umum</h3><p>Aturan global yang berlaku lintas workflow.</p><a href="PROSEDUR-UMUM.md">Buka Prosedur</a></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>📦 Paket Pekerjaan</h2>
-      <div class="grid">
-        <article class="card"><h3>01 — Digital Product + Marketing</h3><p><strong>ACTIVE</strong><br>WF-00–WF-04 tetap satu paket.</p><a href="packages/P01-DIGITAL-PRODUCT-MARKETING.md">Buka Paket 01</a></article>
-        <article class="card"><h3>02 — Recording / Meeting</h3><p><strong>PLANNED</strong><br>Rekaman, meeting, bar files.</p><a href="packages/P02-RECORDING-MEETING.md">Buka Paket 02</a></article>
-        <article class="card"><h3>03 — Building / App &amp; Tool</h3><p><strong>PLANNED</strong><br>Pembuatan dan pengembangan aplikasi/tool.</p><a href="packages/P03-BUILDING-APP-TOOL.md">Buka Paket 03</a></article>
-        <article class="card"><h3>04 — Content / Video</h3><p><strong>PLANNED</strong><br>Domain konten/video tersendiri.</p><a href="packages/P04-CONTENT-VIDEO.md">Buka Paket 04</a></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>🧩 Workflow Paket 01</h2>
-      <p class="muted">WF-00–WF-04 tetap berada di Paket 01. Daftar ini untuk navigasi, bukan untuk memecah paket.</p>
-      <div class="grid">
-        <article class="card"><h3>WF-00 — Storage</h3><p>Routing Cloudinary / Box.</p><a href="workflows/workflow-00-storage.md">Buka WF-00</a></article>
-        <article class="card"><h3>WF-01 — Publisher</h3><p>Publishing dan verifikasi status.</p><a href="workflows/workflow-01-publisher.md">Buka WF-01</a></article>
-        <article class="card"><h3>WF-02 — Production Engine</h3><p>HOW TO MAKE, recipe, QC, handoff.</p><a href="workflows/workflow-02-production-engine.md">Buka WF-02</a></article>
-        <article class="card"><h3>WF-03 — Digital Product</h3><p>WHAT TO MAKE dan product registry.</p><a href="workflows/workflow-03-digital-product.md">Buka WF-03</a></article>
-        <article class="card"><h3>WF-04 — Product Marketing / Explainer</h3><p>Marketing/explainer untuk produk jadi.</p><a href="workflows/workflow-04-marketing-explainer.md">Buka WF-04</a></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>⏱️ Auto-Checkpoint Watchdog</h2>
-      <article class="card">
-        <p><strong>AKTIF</strong> — pemeriksaan setiap 15 menit; ambang 1 jam tanpa commit pekerjaan baru.</p>
-        <p class="muted">Watchdog hanya membaca keadaan yang tersimpan di repository. Ia tidak dapat memaksa ChatGPT membaca percakapan yang belum tersimpan.</p>
-        <a href="CHECKPOINT-HARIAN.md">Lihat status checkpoint</a>
-      </article>
-    </section>
-  </main>
-</body>
-</html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MR.ONE MASTER WORKFLOW CONTROL CENTER</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:#f6f7f9;color:#18202a}.app{display:flex;min-height:100vh}.side{width:270px;background:#fff;border-right:1px solid #ddd;padding:22px 16px;position:sticky;top:0;height:100vh}.brand{font-weight:800;font-size:18px}.sub{font-size:12px;opacity:.6;margin:3px 0 24px}.title{font-size:11px;font-weight:800;letter-spacing:.08em;opacity:.55;margin:18px 8px 8px}.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:12px 10px;margin:4px 0;font:inherit;cursor:pointer}.nav button:hover,.nav button.active{background:#eef1f5;font-weight:700}.main{flex:1;padding:34px;max-width:1050px}.badge{display:inline-block;border:1px solid #aaa;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:700}h1{margin:8px 0 6px;font-size:30px}.lead{max-width:760px;opacity:.78}.panel{background:#fff;border:1px solid #ddd;border-radius:16px;padding:22px;margin-top:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{border:1px solid #ddd;border-radius:12px;padding:16px}.card h3{margin:0 0 8px}.card p{margin:7px 0 14px;opacity:.78}a{font-weight:700;color:inherit}.hidden{display:none}.route{font-weight:700}.note{font-size:13px;opacity:.65}@media(max-width:700px){.side{width:190px;padding:16px 10px}.main{padding:22px 16px}h1{font-size:25px}}
+</style></head><body><div class="app">
+<aside class="side"><div class="brand">MR.ONE MASTER</div><div class="sub">WORKFLOW CONTROL CENTER</div>
+<div class="title">PAKET</div><nav class="nav">
+<button class="active" data-p="home">🏠 Beranda</button><button data-p="p01">📦 PAKET 01</button><button data-p="p02">📦 PAKET 02</button><button data-p="p03">📦 PAKET 03</button><button data-p="p04">📦 PAKET 04</button></nav>
+<div class="title">KONTROL</div><nav class="nav"><button data-p="master">🧭 Master Control</button><button data-p="checkpoint">📋 Global Snapshot</button><button data-p="prosedur">📜 Prosedur Umum</button></nav></aside>
+<main class="main">
+<section id="home" class="page"><span class="badge">FOUNDATION: PASS</span><h1>MR.ONE MASTER WORKFLOW CONTROL CENTER</h1><p class="lead">Pilih <strong>satu paket</strong> di sidebar. Layar hanya menampilkan paket yang dipilih.</p><div class="panel"><div class="route">STARTUP-GATE → MASTER CONTROL → PAKET → AUTO CHECKPOINT → WORKFLOW → EKSEKUSI</div><p class="note">Paket dan checkpoint tetap terpisah.</p></div></section>
+<section id="p01" class="page hidden"><span class="badge">ACTIVE</span><h1>PAKET 01 — Digital Product + Marketing</h1><p class="lead">WF-03 → WF-02 → QC → WF-00 → WF-04 → WF-01</p><div class="panel"><h2>Urutan Workflow</h2><div class="grid">
+<article class="card"><h3>WF-03 — WHAT TO MAKE</h3><p>Market/product research dan product registry.</p><a href="workflows/workflow-03-digital-product.md">Buka</a></article>
+<article class="card"><h3>WF-02 — HOW TO MAKE</h3><p>Production recipe, QC, dan handoff.</p><a href="workflows/workflow-02-production-engine.md">Buka</a></article>
+<article class="card"><h3>QC — QUALITY CONTROL</h3><p>Validasi sebelum aset diteruskan.</p><a href="packages/P01-AUTO-CHECKPOINT.md">Buka</a></article>
+<article class="card"><h3>WF-00 — STORAGE</h3><p>Routing aset tersimpan.</p><a href="workflows/workflow-00-storage.md">Buka</a></article>
+<article class="card"><h3>WF-04 — MARKETING</h3><p>Marketing / explainer.</p><a href="workflows/workflow-04-marketing-explainer.md">Buka</a></article>
+<article class="card"><h3>WF-01 — PUBLISHER</h3><p>Publishing dan verifikasi.</p><a href="workflows/workflow-01-publisher.md">Buka</a></article>
+</div></div><div class="panel"><h2>📋 Auto Checkpoint P01</h2><a href="packages/P01-AUTO-CHECKPOINT.md">Buka checkpoint P01</a></div></section>
+<section id="p02" class="page hidden"><span class="badge">PLANNED</span><h1>PAKET 02 — Recording / Meeting</h1><p class="lead">Rekaman, meeting, bar files.</p><div class="panel"><a href="packages/P02-AUTO-CHECKPOINT.md">Buka Auto Checkpoint P02</a></div></section>
+<section id="p03" class="page hidden"><span class="badge">PLANNED</span><h1>PAKET 03 — Building / App &amp; Tool</h1><p class="lead">Pembuatan dan pengembangan aplikasi/tool.</p><div class="panel"><a href="packages/P03-AUTO-CHECKPOINT.md">Buka Auto Checkpoint P03</a></div></section>
+<section id="p04" class="page hidden"><span class="badge">PLANNED</span><h1>PAKET 04 — Content / Video</h1><p class="lead">Domain konten/video tersendiri.</p><div class="panel"><a href="packages/P04-AUTO-CHECKPOINT.md">Buka Auto Checkpoint P04</a></div></section>
+<section id="master" class="page hidden"><span class="badge">CONTROL MAP</span><h1>MASTER CONTROL</h1><div class="panel"><p>Registry paket, pemisahan domain, dan routing utama.</p><a href="MASTER-CONTROL.md">Buka MASTER-CONTROL.md</a></div></section>
+<section id="checkpoint" class="page hidden"><span class="badge">GLOBAL SNAPSHOT</span><h1>CHECKPOINT HARIAN</h1><div class="panel"><p>Snapshot global. Detail setiap paket berada di checkpoint masing-masing.</p><a href="CHECKPOINT-HARIAN.md">Buka CHECKPOINT-HARIAN.md</a></div></section>
+<section id="prosedur" class="page hidden"><span class="badge">GLOBAL RULES</span><h1>PROSEDUR UMUM</h1><div class="panel"><p>Aturan global lintas workflow.</p><a href="PROSEDUR-UMUM.md">Buka PROSEDUR-UMUM.md</a></div></section>
+</main></div><script>
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));document.getElementById(b.dataset.p).classList.remove('hidden')});
+</script></body></html>
