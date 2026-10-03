@@ -5,112 +5,65 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MR.ONE Master Control</title>
   <style>
-    body{font-family:system-ui,sans-serif;max-width:900px;margin:0 auto;padding:32px 20px;line-height:1.5}
-    .status{display:inline-block;padding:4px 10px;border:1px solid #999;border-radius:999px;font-size:14px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:24px}
-    .card{border:1px solid #ccc;border-radius:12px;padding:18px}
-    a{font-weight:600}
+    body{font-family:system-ui,sans-serif;max-width:980px;margin:0 auto;padding:28px 18px;line-height:1.5}
+    header{padding:22px 0 8px}.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em}
+    h1{margin:6px 0;font-size:32px}.lead{max-width:760px}
+    .status{display:inline-block;padding:4px 10px;border:1px solid #999;border-radius:999px;font-size:13px}
+    .section{margin-top:28px}.section h2{margin-bottom:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .card{border:1px solid #ccc;border-radius:12px;padding:16px}
+    .card h3{margin-top:0}.card p{margin:8px 0 14px}
+    a{font-weight:700}.muted{opacity:.75;font-size:14px}
+    .route{border:1px solid #ccc;border-radius:12px;padding:14px;margin-top:14px;font-weight:650}
   </style>
 </head>
 <body>
   <main>
-    <h1>MR.ONE MASTER CONTROL</h1>
-    <p>Peta utama MR.ONE: temukan paket pekerjaan, aturan, tools/connectors, checkpoint, dan lokasi kerja. GitHub menyimpan memori prosedural; GPT menjalankan pekerjaan melalui connector.</p>
-    <p class="status">FOUNDATION: PASS</p>
+    <header>
+      <div class="eyebrow">MR.ONE</div>
+      <h1>MASTER CONTROL</h1>
+      <p class="lead">Peta utama untuk menemukan <strong>paket pekerjaan → workflow → checkpoint → lokasi kerja</strong>. Master Control bukan production center dan bukan storage aset.</p>
+      <span class="status">FOUNDATION: PASS</span>
+    </header>
 
-    <section class="grid" aria-label="MR.ONE control center">
-      <article class="card">
-        <h2>PROSEDUR UMUM</h2>
-        <p>Status: <strong>MASTER PROCEDURE</strong></p>
-        <p>Prosedur penggunaan yang berlaku untuk seluruh workflow MR.ONE.</p>
-        <a href="PROSEDUR-UMUM.md">Buka Prosedur Umum</a>
-      </article>
-
-      <article class="card">
-        <h2>CHECKPOINT HARIAN</h2>
-        <p>Status: <strong>AKTIF</strong></p>
-        <p>Titik kerja terakhir, status pekerjaan, hasil/bukti, masalah, dan tindakan berikutnya.</p>
-        <a href="CHECKPOINT-HARIAN.md">Buka Checkpoint Harian</a>
-      </article>
+    <section class="section">
+      <h2>🚦 Mulai dari sini</h2>
+      <div class="route">STARTUP-GATE → MASTER CONTROL → PILIH PAKET → BUKA WORKFLOW → CEK CHECKPOINT → EKSEKUSI</div>
+      <div class="grid">
+        <article class="card"><h3>📍 Master Control</h3><p>Registry paket dan aturan pemisahan domain.</p><a href="MASTER-CONTROL.md">Buka Master Control</a></article>
+        <article class="card"><h3>📋 Checkpoint Harian</h3><p>Posisi kerja terbaru, bukti, masalah, dan next step.</p><a href="CHECKPOINT-HARIAN.md">Buka Checkpoint</a></article>
+        <article class="card"><h3>📜 Prosedur Umum</h3><p>Aturan global yang berlaku lintas workflow.</p><a href="PROSEDUR-UMUM.md">Buka Prosedur</a></article>
+      </div>
     </section>
 
-    <article class="card" style="margin-top:16px">
-      <h2>AUTO-CHECKPOINT WATCHDOG</h2>
-      <p>Status: <strong>AKTIF</strong></p>
-      <p>GitHub memeriksa repository setiap 15 menit. Jika tidak ada commit pekerjaan baru selama <strong>1 jam</strong>, sistem mencatat Last Known State ke Checkpoint Harian.</p>
-      <p><strong>Interval:</strong> 15 menit &nbsp; | &nbsp; <strong>Ambang:</strong> 1 jam tanpa commit</p>
-      <p>Catatan: watchdog hanya membaca keadaan yang tersimpan di repository, bukan isi percakapan ChatGPT yang belum disimpan.</p>
-      <a href="CHECKPOINT-HARIAN.md">Lihat Checkpoint Harian</a>
-    </article>
-
-
-    <section class="grid" aria-label="MR.ONE master packages">
-      <article class="card">
-        <h2>📦 Paket 01 — Digital Product + Marketing</h2>
-        <p>Status: <strong>ACTIVE</strong></p>
-        <p>WF-00–WF-04 tetap satu paket: Storage, Publisher, Production, Digital Product, dan Product Marketing.</p>
-        <a href="packages/P01-DIGITAL-PRODUCT-MARKETING.md">Buka Paket 01</a>
-      </article>
-      <article class="card">
-        <h2>🎙️ Paket 02 — Recording / Meeting</h2>
-        <p>Status: <strong>PLANNED</strong></p>
-        <p>Domain rekaman, meeting, bar files, dan hasil terkait.</p>
-        <a href="packages/P02-RECORDING-MEETING.md">Buka Paket 02</a>
-      </article>
-      <article class="card">
-        <h2>🛠️ Paket 03 — Building / App &amp; Tool</h2>
-        <p>Status: <strong>PLANNED</strong></p>
-        <p>Domain pembuatan, pengujian, deployment, dan pemeliharaan aplikasi/tool.</p>
-        <a href="packages/P03-BUILDING-APP-TOOL.md">Buka Paket 03</a>
-      </article>
-      <article class="card">
-        <h2>🎬 Paket 04 — Content / Video</h2>
-        <p>Status: <strong>PLANNED</strong></p>
-        <p>Domain konten/video tersendiri. WF-04 tetap berada di Paket 01.</p>
-        <a href="packages/P04-CONTENT-VIDEO.md">Buka Paket 04</a>
-      </article>
+    <section class="section">
+      <h2>📦 Paket Pekerjaan</h2>
+      <div class="grid">
+        <article class="card"><h3>01 — Digital Product + Marketing</h3><p><strong>ACTIVE</strong><br>WF-00–WF-04 tetap satu paket.</p><a href="packages/P01-DIGITAL-PRODUCT-MARKETING.md">Buka Paket 01</a></article>
+        <article class="card"><h3>02 — Recording / Meeting</h3><p><strong>PLANNED</strong><br>Rekaman, meeting, bar files.</p><a href="packages/P02-RECORDING-MEETING.md">Buka Paket 02</a></article>
+        <article class="card"><h3>03 — Building / App &amp; Tool</h3><p><strong>PLANNED</strong><br>Pembuatan dan pengembangan aplikasi/tool.</p><a href="packages/P03-BUILDING-APP-TOOL.md">Buka Paket 03</a></article>
+        <article class="card"><h3>04 — Content / Video</h3><p><strong>PLANNED</strong><br>Domain konten/video tersendiri.</p><a href="packages/P04-CONTENT-VIDEO.md">Buka Paket 04</a></article>
+      </div>
     </section>
 
-    <article class="card" style="margin-top:16px">
-      <h2>🧭 MASTER CONTROL</h2>
-      <p>Master Control adalah peta, bukan tempat produksi atau penyimpanan aset. Paket baru dapat ditambahkan sebagai Paket 05, 06, 07, dan seterusnya bila memang diperlukan.</p>
-      <a href="MASTER-CONTROL.md">Buka Master Control</a>
-    </article>
+    <section class="section">
+      <h2>🧩 Workflow Paket 01</h2>
+      <p class="muted">WF-00–WF-04 tetap berada di Paket 01. Daftar ini untuk navigasi, bukan untuk memecah paket.</p>
+      <div class="grid">
+        <article class="card"><h3>WF-00 — Storage</h3><p>Routing Cloudinary / Box.</p><a href="workflows/workflow-00-storage.md">Buka WF-00</a></article>
+        <article class="card"><h3>WF-01 — Publisher</h3><p>Publishing dan verifikasi status.</p><a href="workflows/workflow-01-publisher.md">Buka WF-01</a></article>
+        <article class="card"><h3>WF-02 — Production Engine</h3><p>HOW TO MAKE, recipe, QC, handoff.</p><a href="workflows/workflow-02-production-engine.md">Buka WF-02</a></article>
+        <article class="card"><h3>WF-03 — Digital Product</h3><p>WHAT TO MAKE dan product registry.</p><a href="workflows/workflow-03-digital-product.md">Buka WF-03</a></article>
+        <article class="card"><h3>WF-04 — Product Marketing / Explainer</h3><p>Marketing/explainer untuk produk jadi.</p><a href="workflows/workflow-04-marketing-explainer.md">Buka WF-04</a></article>
+      </div>
+    </section>
 
-    <section class="grid" aria-label="MR.ONE workflows">
+    <section class="section">
+      <h2>⏱️ Auto-Checkpoint Watchdog</h2>
       <article class="card">
-        <h2>Workflow 00 — Storage</h2>
-        <p>Status: <strong>IMPLEMENTED / E2E PARTIAL</strong></p>
-        <p>Routing penyimpanan: Cloudinary untuk konten/media; Box untuk file/dokumen.</p>
-        <a href="workflows/workflow-00-storage.md">Buka prosedur Workflow 00</a>
-      </article>
-
-      <article class="card">
-        <h2>Workflow 01 — Publisher</h2>
-        <p>Status: <strong>LOGIKA &amp; JALUR PUBLISHER TERBUKTI</strong></p>
-        <p>Aturan untuk publishing, verifikasi hasil, dan pemeriksaan riwayat publikasi.</p>
-        <a href="workflows/workflow-01-publisher.md">Buka prosedur Workflow 01</a>
-      </article>
-
-      <article class="card">
-        <h2>Workflow 02 — Production Engine</h2>
-        <p>Status: <strong>ACTIVE CHECKPOINT / PROVEN CAPABILITIES</strong></p>
-        <p>Produksi, capability registry, QC, dan handoff.</p>
-        <a href="workflows/workflow-02-production-engine.md">Buka prosedur Workflow 02</a>
-      </article>
-
-      <article class="card">
-        <h2>Workflow 03 — Product Digital</h2>
-        <p>Status: <strong>ACTIVE CHECKPOINT / PROVEN ENGINES</strong></p>
-        <p>Menentukan produk yang akan dibuat dan mencatat engine yang sudah terbukti.</p>
-        <a href="workflows/workflow-03-digital-product.md">Buka prosedur Workflow 03</a>
-      </article>
-
-      <article class="card">
-        <h2>Workflow 04 — Content Video / News</h2>
-        <p>Status: <strong>TECHNICAL TEST PASSED / REAL PRODUCT TEST PENDING</strong></p>
-        <p>Marketing/explainer untuk produk yang sudah selesai dan QC PASS.</p>
-        <a href="workflows/workflow-04-marketing-explainer.md">Buka prosedur Workflow 04</a>
+        <p><strong>AKTIF</strong> — pemeriksaan setiap 15 menit; ambang 1 jam tanpa commit pekerjaan baru.</p>
+        <p class="muted">Watchdog hanya membaca keadaan yang tersimpan di repository. Ia tidak dapat memaksa ChatGPT membaca percakapan yang belum tersimpan.</p>
+        <a href="CHECKPOINT-HARIAN.md">Lihat status checkpoint</a>
       </article>
     </section>
   </main>
