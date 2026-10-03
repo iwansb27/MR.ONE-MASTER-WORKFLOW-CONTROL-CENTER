@@ -298,6 +298,42 @@ Urutan pembukaan:
 Jika informasi pekerjaan spesifik belum tersedia, GPT boleh meminta hanya informasi yang benar-benar belum dapat ditemukan dari sumber yang sudah tersedia. GPT tidak boleh meminta pengguna mengulang aturan yang sudah terdokumentasi.
 
 
+
+### 9.10 STARTUP GATE — Trigger Teknis dan Paksaan Pembacaan
+
+Untuk mengubah kewajiban startup menjadi gate yang dapat diverifikasi repository, setiap sesi MR.ONE menggunakan **STARTUP-GATE.md** sebagai pintu startup tunggal.
+
+**Urutan wajib:**
+
+**STARTUP-GATE.md → MASTER WORKSPACE (bila tersedia) → PROSEDUR-UMUM.md → CHECKPOINT-HARIAN.md → Workflow 01–04 → identifikasi pekerjaan → workflow lokal → eksekusi**
+
+Aturan ini berlaku untuk **semua GPT/model yang masuk atau digunakan untuk pekerjaan MR.ONE**, termasuk model utama, model fallback/pengganti, dan model lain yang mengambil alih sesi.
+
+**Tidak ada silent bypass.**
+
+Sebelum pekerjaan teknis MR.ONE dijalankan:
+1. GPT/model harus membaca STARTUP-GATE.md.
+2. GPT/model harus membaca seluruh sumber wajib yang ditentukan gate.
+3. GPT/model harus memastikan sumber dapat dibaca dan tidak konflik.
+4. Jika gate atau sumber wajib tidak dapat diverifikasi, status startup adalah **BLOCKED** dan pekerjaan teknis tidak dilanjutkan.
+5. Setelah gate lolos, GPT/model mengikuti aturan LANJUTKAN yang sudah ditetapkan pada bagian 9.3.
+
+#### Validasi teknis repository
+
+GitHub Action **.github/workflows/startup-gate.yml** memvalidasi secara berkala dan pada perubahan main bahwa:
+- STARTUP-GATE.md tersedia;
+- PROSEDUR-UMUM.md tersedia;
+- CHECKPOINT-HARIAN.md tersedia;
+- Workflow 01–04 tersedia dan tidak kosong.
+
+Action juga dapat dijalankan manual melalui GitHub Actions.
+
+**STARTUP GATE PASS** berarti sumber wajib repository tersedia dan tervalidasi.
+
+**Penting:** GitHub Actions tidak memiliki kemampuan native untuk memaksa aplikasi ChatGPT menjalankan tool/read tepat pada detik sesi baru dibuka. Karena itu “trigger teknis otomatis memaksa pembacaan” diimplementasikan sebagai **repository gate + validasi otomatis + kewajiban startup GPT/model**. Repository dapat memblokir/menandai kondisi gate rusak, sedangkan pembacaan oleh GPT tetap dilakukan pada saat sesi masuk.
+
+Mekanisme ini tidak boleh disebut sebagai hook native ChatGPT yang otomatis mengeksekusi pembacaan; klaim tersebut tidak didukung oleh kemampuan GitHub yang tersedia.
+
 ## 10. Checkpoint Harian dan Catatan Kerja
 
 `CHECKPOINT-HARIAN.md` adalah **titik checkpoint operasional** yang berada di sebelah `PROSEDUR-UMUM.md` pada root repository.
