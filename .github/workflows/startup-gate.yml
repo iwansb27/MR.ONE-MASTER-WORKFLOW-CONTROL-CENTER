@@ -1,0 +1,49 @@
+name: MR.ONE Startup Gate
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  validate-startup-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate mandatory startup files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            "STARTUP-GATE.md"
+            "PROSEDUR-UMUM.md"
+            "CHECKPOINT-HARIAN.md"
+            "workflows/workflow-01-publisher.md"
+            "workflows/workflow-02-production-engine.md"
+            "workflows/workflow-03-digital-product.md"
+            "workflows/workflow-04-marketing-explainer.md"
+          )
+
+          missing=0
+          for file in "${required[@]}"; do
+            if [ ! -s "$file" ]; then
+              echo "STARTUP GATE FAIL: missing or empty: $file"
+              missing=1
+            else
+              echo "STARTUP GATE OK: $file"
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "STARTUP GATE PASS: all mandatory startup sources are present."
+          echo "Repository commit: $GITHUB_SHA"
