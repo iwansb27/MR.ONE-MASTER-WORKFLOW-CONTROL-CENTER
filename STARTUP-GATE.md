@@ -13,16 +13,17 @@ Gate ini menyatukan urutan pembacaan agar tidak bergantung pada ingatan percakap
 ## Urutan WAJIB
 
 1. Baca **MASTER WORKSPACE** terbaru bila tersedia.
-2. Baca **PROSEDUR-UMUM.md**.
-3. Baca **CHECKPOINT-HARIAN.md**.
-4. Baca seluruh:
+2. Baca **MASTER-CONTROL.md** untuk menentukan paket/domain pekerjaan.
+3. Baca **PROSEDUR-UMUM.md**.
+4. Baca **CHECKPOINT-HARIAN.md**.
+5. Baca seluruh:
    - `workflows/workflow-01-publisher.md`
    - `workflows/workflow-02-production-engine.md`
    - `workflows/workflow-03-digital-product.md`
    - `workflows/workflow-04-marketing-explainer.md`
-5. Pahami hubungan antar-workflow.
-6. Baru identifikasi pekerjaan aktif dan masuk ke workflow lokal yang relevan.
-7. Untuk perubahan teknis yang membutuhkan persetujuan owner, tunggu **LANJUTKAN**.
+6. Pahami hubungan antar-paket dan antar-workflow.
+7. Baru identifikasi pekerjaan aktif dan masuk ke workflow lokal yang relevan.
+8. Untuk perubahan teknis yang membutuhkan persetujuan owner, tunggu **LANJUTKAN**.
 
 ## Aturan model
 
@@ -54,6 +55,7 @@ Karena itu mekanisme ini terdiri dari dua lapis:
 Startup dianggap siap bila:
 - semua file wajib ada;
 - gate dapat dibaca;
+- MASTER-CONTROL.md dapat dibaca;
 - prosedur global dapat dibaca;
 - checkpoint dapat dibaca;
 - Workflow 01–04 dapat dibaca;
