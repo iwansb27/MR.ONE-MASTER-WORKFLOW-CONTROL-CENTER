@@ -30,12 +30,13 @@ WF-00–WF-04 **tetap satu paket dan tidak dipecah**.
 
 Status capability detail selalu mengikuti workflow sumber.
 
-## Checkpoint
+## AUTO CHECKPOINT
 
-Checkpoint operasional utama berada di:
+Checkpoint operasional Paket 01 berada di:
 
-- `CHECKPOINT-HARIAN.md`
-- masing-masing workflow di `workflows/`
+- `packages/P01-AUTO-CHECKPOINT.md`
+
+File tersebut adalah sumber status pekerjaan Paket 01. `CHECKPOINT-HARIAN.md` di root hanya menjadi **global snapshot/index**, bukan tempat detail checkpoint Paket 01.
 
 ## Lokasi kerja
 
